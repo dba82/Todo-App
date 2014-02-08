@@ -1,0 +1,88 @@
+text
+tel
+url
+email
+date
+month
+week
+time
+datetime
+number
+range
+color
+checkbox
+image
+file
+
+eigenschaften einzelner todos:
+recurring true/false wie oft? wie lange hats tatsächlich gedauert? (beispiele: rasieren, duschen, spülen, aufräumen, wäsche waschen, ...)
+
+
+{
+	name: {de: }, //wird angezeigt
+	description: {de: }
+	model: "Attribut des Objekts, das als Model fungiert",
+	required: bool oder zahl (falls zahl ungleich 1 -> multiple falls undefined auf true),
+	type: "",
+	restrictions: []
+	multiple: bool oder zahl
+
+}
+
+
+
+<autoform schema="{}"></autoform>
+
+person.schema = {	firstName: {
+								name: {default: "first name"},
+								type: {default: "list"}, 
+								subtype: {default: "text"}, 
+								regexp: "[a-Z\\-]+", 
+								options: {default: true, required: true}},
+					secondName: {
+								name: {default: "second name"}, 
+								type: {default: "text"}, 
+								regexp: "[a-Z\\-]+", 
+								options: {default: true, required: true}} 
+}
+
+soll das ... ab ... bis ... mögliche Zeiten ... zeitaufwand ... mögliche orte ... nötiges gerät ... nötige personen
+
+ersetzbar bis ... durch ... falls ... extraaufwand: ...
+kündbar bei ... bis ... durch ... falls ... extraaufwand: ...
+delegierbar an ... bis ... durch ... falls ... vermutlich/definitiv extraaufwand: ...
+
+^>		konstitutiv für schritt auf höherer ebene
+->		benötigt anderen Schritt auf gleicher Ebene
+=>		letzter schritt zur Durchführung 
+
+
+anruf
+	^>telefonnummer herausfinden
+	^>telefonzeiten herausfinden
+	=>anrufen
+email
+	^>emailadresse herausfinden
+	^>email schreiben
+		^>Rohfassung schreiben
+		->Gegenlesen lassen
+		=>Endfassung schreiben
+	=>email verschicken
+formulareingabe im netz
+brief verschicken
+	^>umschlag besorgen
+	->adresse draufschreiben
+	^>briefmarke besorgen
+	^>adresse herausfinden
+	^>brief schreiben
+		->brief rohfassung schreiben
+		->Gegenlesen lassen
+		=>Endfassung schreiben
+	=>einwerfen
+	->zum nächsten briefkasten gehen
+	-->nächsten briefkasten finden
+
+
+
+
+

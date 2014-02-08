@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- utf8beacon ist für dropboxhosting -->
+	<meta name="utf8beacon" content="éçñøåá—" />
+	<meta charset="utf-8">
+
+	<title>Die Super Duber Mega Giga Todo Applikation</title>
+
+	<link rel="stylesheet" href="css/foundation.css">
+	<link rel="stylesheet" href="css/foundation-icons.css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" href="css/controlbarAnimation.css">
+</head>
+
+<body ng-app="myApp" ng-controller="Ctrl" ng-cloak>
+
+
+	<top-bar></top-bar>
+
+	<div class="mainview row">
+		<div class="treeview small-6 columns">
+			<tree></tree>
+		</div>
+		<div class="sticky detailview small-6 columns">
+			<item-detail-view></item-detail-view>
+		</div>
+	</div>
+
+	<script src="libraries/lodash.compat.min.js"></script>
+	<script src="libraries/angular.min.js"></script>
+	<script src="libraries/angular-animate.min.js"></script>
+
+
+	<script src="models/Node.js"></script>
+	<script src="models/Todo.js"></script>
+	<script src="directive-treeitem.js"></script>
+	<script>
+	var dependencies,
+		Ctrl;
+	dependencies = ["tree", "ngAnimate"];
+	angular.module('myApp', dependencies);
+	Ctrl  = function($scope, $window, Todos, UIState){
+		
+		shadeColor = function(color, percent) {   
+			var num = parseInt(color.slice(1),16), amt = Math.round(2.55 * percent), R = (num >> 16) + amt, G = (num >> 8 & 0x00FF) + amt, B = (num & 0x0000FF) + amt;
+			return "#" + (0x1000000 + (R<255?R<1?0:R:255)*0x10000 + (G<255?G<1?0:G:255)*0x100 + (B<255?B<1?0:B:255)).toString(16).slice(1);
+		};
+
+		$scope.todos = Todos.tree.getNodesOfLevel(1);
+		$scope.uistate = UIState;
+
+		$scope.toggleCollapsed = function(item){
+			//console.log("SCHEISSE PASSIERT DA WAS????");
+			$scope.uistate.state.collapsed[item.treeId] = !$scope.uistate.state.collapsed[item.treeId];
+			//console.log($scope);
+
+			$scope.uistate.save();
+		};
+
+		$scope.toggleHideDone = function(item){
+			$scope.uistate.hide_done = !$scope.uistate.hide_done;
+			$scope.uistate.save();
+		};
+
+		$scope.setCurrentSelection = function(item){
+			$scope.uistate.state.currentSelection = item;
+			$scope.uistate.save();
+		};
+
+		$scope.toggleSelectMultiple = function(item){
+			var index;
+			if ($scope.isInSelection(item)){
+				index = $scope.uistate.state.currentSelectionArray.indexOf(item);
+				$scope.uistate.state.currentSelectionArray.splice(index, 1);
+			} else{
+				$scope.uistate.state.currentSelectionArray.push(item);
+			}
+		};
+
+		$scope.putSelectionHere = function(item){
+			var i;
+			for (i in $scope.uistate.state.currentSelectionArray){
+				$scope.uistate.state.currentSelectionArray[i].move(item);
+			}
+			$scope.uistate.state.currentSelectionArray = [];
+			Todos.save();
+		};
+
+		$scope.putSelectionHereAfter = function(item){
+			var i;
+			for (i in $scope.uistate.state.currentSelectionArray){
+				$scope.uistate.state.currentSelectionArray[i].moveAfter(item);
+			}
+			$scope.uistate.state.currentSelectionArray = [];
+			Todos.save();
+		};
+
+		$scope.putSelectionHereBefore = function(item){
+			var i;
+			for (i in $scope.uistate.state.currentSelectionArray){
+				$scope.uistate.state.currentSelectionArray[i].moveBefore(item);
+			}
+			$scope.uistate.state.currentSelectionArray = [];
+			Todos.save();
+		};
+
+		$scope.isInSelection = function(item){
+			var result;
+			result = false;
+			if (item.treeId) {
+				result = $scope.uistate.state.currentSelectionArray.indexOf(item) !== -1;
+			}
+			return result;
+		};
+
+		$scope.isFamilyInSelection = function(item){
+			var parent, result;
+			parent = item.getParent();
+			if ($scope.isInSelection(item)){
+				result = true;
+			} else {
+				parent = item.getParent();
+				if (parent){
+					result = $scope.isFamilyInSelection(parent);
+				} else {
+					result = false;
+				}
+			}
+			return result;
+		};
+
+		$scope.save = function(){
+			Todos.save();
+		};
+
+		$scope.add = function(item){
+			item.addChild(new Node({text: ''}, item.tree));
+			$scope.uistate.state.collapsed[item.treeId] = true;
+			Todos.save();
+		};
+
+		$scope.addAfter = function(item){
+			var nItem;
+			nItem = new Node({text: ''}, item.tree);
+			item.getParent().addChildAfter(nItem, item);
+			$scope.uistate.state.currentSelection = nItem;
+			Todos.save();
+		};
+
+		$scope.addProject = function(){
+			$scope.add(Todos.tree.getRoot());
+			$scope.todos = Todos.tree.getNodesOfLevel(1);
+		};
+
+		$scope.remove = function(item){
+			item.remove();
+			if (item.getLevel() === 1){
+				$scope.todos = Todos.tree.getNodesOfLevel(1);
+			}
+			Todos.save()
+		};
+
+		$scope.style = function(item){
+			var result;
+			result = {};
+			if (!item.content.done) {
+				result["background-color"] = shadeColor("#555555", 100/item.getLevel());
+			}
+
+			return result;
+		};
+	};
+	</script>
+</body>
+</html>

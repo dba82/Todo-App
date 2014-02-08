@@ -1,0 +1,19 @@
+<!--Show this view only if this task isn't done or all tasks should be shown-->
+<div	ng-if="!item.content.done || !uistate.state.hide_done">
+
+<div class="large-12 columns treeitem">
+
+      <item-main-bar></item-main-bar>
+      
+      <item-control-bar></item-control-bar>
+
+</div>
+
+<!--Show this div only if the children of the item should be shown-->
+<div 
+	ng-if="uistate.state.collapsed[item.parent]" 
+	ng-include="'partials/treeitem.html'"
+	ng-repeat="item in item.getChildren() track by $index">
+</div>
+
+</div>

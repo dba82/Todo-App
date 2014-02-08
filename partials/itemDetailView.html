@@ -1,0 +1,81 @@
+<!--Show this view only if a task is actually selected-->
+<form ng-if="uistate.state.currentSelection" > 
+	<fieldset>
+		<div class="row">
+			<div class="small-3 columns">
+				<label>Fertig</label>
+				<input 	type="checkbox" 
+						class="small-3 columns" 
+						ng-blur="save()" 
+						ng-model="uistate.state.currentSelection.content.done">
+				</input>
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-10 columns">
+				<label>Aufgabe</label>
+				<input 	type="text" 
+						class="small-10 columns" 
+						ng-blur="save()" 
+						ng-model="uistate.state.currentSelection.content.text">
+				</input>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="small-4 columns">
+				<label>Geschätzte Dauer</label>
+				<input 	type="number"  
+						ng-blur="save()" 
+						ng-model="uistate.state.currentSelection.content.estimatedDuration">
+				</input>
+			</div>
+			<div class="small-6 columns">
+				<label>Tatsächliche Dauer</label>
+				<input 	type="number"  
+						ng-blur="save()" 
+						ng-model="uistate.state.currentSelection.content.actualDuration">
+				</input>
+			</div>
+
+			<div class="row">
+				<div class="small-3 columns">
+					<label>Frage</label>
+					<input 	type="checkbox"  
+							ng-blur="save()" 
+							ng-model="uistate.state.currentSelection.content.isQuestion">
+					</input>
+				</div>
+				<div class="small-3 columns">
+					<label>Email</label>
+					<input 	type="checkbox"  
+							ng-blur="save()" 
+							ng-model="uistate.state.currentSelection.content.isWriteEmail">
+					</input>
+				</div>
+
+			</div>
+
+			<div class="row" ng-if="uistate.state.currentSelection.content.isQuestion">
+				<div class="small-10 columns">
+					<label>Antwort</label>
+					<textarea 	class="small-10 columns" 
+								ng-blur="save()" 
+								ng-model="uistate.state.currentSelection.content.answer">
+					</textarea>
+				</div>
+			</div>
+
+			<div class="row" ng-if="uistate.state.currentSelection.content.isWriteEmail">
+				<div class="small-10 columns">
+					<label>Adresse</label>
+					<input  type = "text"
+							class="small-5 columns" 
+							ng-blur="save()" 
+							ng-model="uistate.state.currentSelection.content.writeTo">
+					</input>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+</form>

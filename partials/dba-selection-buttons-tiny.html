@@ -1,0 +1,38 @@
+  <!--select this task to move it and its subtasks somewhere else or deselect it-->
+  <!--show only if this task is a selected task but not its ancestors-->
+  <dba-button-tiny
+        ng-class="{'dba-marked' : isFamilyInSelection(item)}"
+        ng-if="!isFamilyInSelection(item) || isInSelection(item)"
+        ng-click="toggleSelectMultiple(item)">
+    <i class="fi-clipboard"></i>
+  </dba-button-tiny>
+
+  <!--add the currently selected tasks as subtasks to this task-->
+  <!--show only if neither this task nor any of its ancestor is a selected task-->
+  <dba-button-tiny
+        ng-if="uistate.state.currentSelectionArray.length > 0 && !isFamilyInSelection(item)"
+        ng-class="{
+          'dba-marked' : isFamilyInSelection(item) }" 
+        ng-click="putSelectionHere(item)">
+    <i class="fi-arrow-right"></i>
+  </dba-button-tiny>
+
+  <!--add the currently selected tasks before this task-->
+  <!--show only if neither this task nor any of its ancestor is a selected task-->
+  <dba-button-tiny
+        ng-if="uistate.state.currentSelectionArray.length > 0 && !isFamilyInSelection(item)"
+        ng-class="{
+          'dba-marked' : isFamilyInSelection(item) }" 
+        ng-click="putSelectionHereBefore(item)">
+    <i class="fi-arrow-up"></i>
+  </dba-button-tiny>
+
+  <!--add the currently selected tasks after this task-->
+  <!--show only if neither this task nor any of its ancestor is a selected task-->
+  <dba-button-tiny
+        ng-if="uistate.state.currentSelectionArray.length > 0 && !isFamilyInSelection(item)"
+        ng-class="{
+          'dba-marked' : isFamilyInSelection(item) }" 
+        ng-click="putSelectionHereAfter(item)">
+    <i class="fi-arrow-down"></i>
+  </dba-button-tiny>

@@ -1,0 +1,68 @@
+*{
+	box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+*[ng-cloak]{
+	display: none;
+}
+.detailview{
+	margin-top: 60px;
+	margin-left: 10px;
+	height: 100%;
+}
+.treeview{
+	margin-top: 60px;
+	background-color: rgb(51,51,51);
+	padding: 0px;
+}
+.treeitem{
+	padding: 0px;
+}
+.listitem{
+	margin-bottom: 0px !important;
+	cursor: default;
+}
+
+.sticky {
+	 	position: fixed;
+  		top: 0px;
+		right: 0px;
+}
+.detailview fieldset{
+	margin-top: 0px;
+}
+.itemcontrolbar{
+	padding: 5px;
+	background-color: rgb(51,51,51);
+	margin-bottom: 0px;
+}
+
+.itemcontrolbar > .small-1{
+	padding-left:1px; 
+	padding-right:0px;
+	display:inline-block; 
+	margin-bottom: 0px
+}
+.itemcontrolbar > .small-1 input[type="checkbox"]{
+	margin-bottom: 0px
+
+}
+.button{
+	margin-bottom: 0px;
+}
+.dba-marked{
+	background-color: rgb(190, 40, 40);
+}
+.invisible{
+	visibility: hidden;
+}
+.dba-checked{
+	background-color: green;
+}
+.dba-done{
+	background-color: #ffffff;
+	text-decoration: line-through;
+}
+.dba-parent{
+	font-weight: bold;
+}

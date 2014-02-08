@@ -1,0 +1,32 @@
+<div class="row collapse">
+
+  <dba-button-tiny
+        class="columns"
+        ng-class="{'dba-marked': isFamilyInSelection(item),
+                  'dba-checked' : item.content.done}" 
+        ng-click="toggleCollapsed(item)"
+        style="height: 37px;">
+    <i  
+        ng-class="{
+        'fi-plus' : (item.getChildren().length > 0 && !uistate.state.collapsed[item.treeId]), 
+        'fi-minus': (item.getChildren().length === 0 || uistate.state.collapsed[item.treeId]),
+        'invisible': (item.getChildren().length === 0)
+      }">
+    </i>
+	</dba-button-tiny>
+
+  <div class="small-11 columns">
+    <input class="listitem"
+    		 type="text"
+         ng-class="{
+                  'dba-parent': item.getChildren().length > 0,
+                  'dba-done': item.content.done
+       }"
+    		 ng-style="style(item)"
+    		 placeholder="Aufgabe"
+    		 ng-blur="save()"
+    		 ng-click="setCurrentSelection(item)"
+    		 ng-model="item.content.text"> 
+    </input>
+  </div>
+</div>

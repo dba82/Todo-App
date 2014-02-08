@@ -1,0 +1,32 @@
+<!--Show this view only if the corresponding task is the currently selected one-->
+<div  ng-if="item === uistate.state.currentSelection" 
+      class="itemcontrolbar row collapse" >
+
+  <!--mark this task as done-->
+  <dba-button-tiny-check
+        model="item.content.done"
+        dba-check-class="dba-checked">
+    <i class="fi-check"></i>
+  </dba-button-tiny-check>
+
+  <!--remove this task-->
+  <dba-button-tiny
+        ng-click="remove(item)">
+    <i class="fi-trash"></i>
+  </dba-button-tiny>
+  
+  <!--add a subtask to this task-->
+  <dba-button-tiny
+        ng-click="add(item)">
+    <i class="fi-plus"></i>
+  </dba-button-tiny>
+
+  <!--add a task after this task-->
+  <dba-button-tiny
+        ng-click="addAfter(item)">
+    <i class="fi-trees"></i>
+  </dba-button-tiny>
+
+  <!--make item selectable and target of insertion-->
+  <dba-selection-buttons-tiny item="item"></dba-selection-buttons-tiny>
+</div>
